@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,14 +18,18 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
+import com.tubes.po2.controller.Controller;
 import com.tubes.po2.src.Source;
 
 @SuppressWarnings("serial")
 public class View extends JFrame{
 	
-	private int gameMode = Source.GAME_MODE4X4;
-	private JPanel panelsTop[][] = new JPanel[gameMode][gameMode];
-	private JPanel panelsBot[][] = new JPanel[gameMode][gameMode];
+	private int gameMode = Source.GAME_MODE2X2;
+	private JPanel panelsLeft[][];
+	private JPanel panelsRight[][];
+	
+	private JButton btnNewGame;
+	private JComboBox<String> comboGameMode;
 	
 	private JPanel upperPanel;
 	
@@ -35,7 +40,6 @@ public class View extends JFrame{
 	public void initView() {
 		addMainPanel();
 		
-		add(upperPanel, BorderLayout.CENTER);
 		setResizable(true);
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,6 +71,7 @@ public class View extends JFrame{
 		addOptionPanel(panel, cm);
 		
 		upperPanel.add(panel);
+		add(upperPanel, BorderLayout.CENTER);
 	}
 	
 	public void addGamePanel(JPanel upperPanel, GridBagConstraints cm) {
@@ -111,22 +116,24 @@ public class View extends JFrame{
 		c.insets = new Insets(10,10,0,10);
 		panel.add(new JLabel("Pilih game mode : "), c);
 		
-		JComboBox<String> combo = new JComboBox<String>(Source.GAME_MODES);
+		comboGameMode = new JComboBox<String>(Source.GAME_MODES);
+		comboGameMode.addItemListener((ItemListener) new Controller(this));
 		c.gridx = 0;
 		c.gridy = 1;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.insets = new Insets(0,10,10,10);
-		panel.add(combo, c);
+		panel.add(comboGameMode, c);
 		
-		JButton button = new JButton("Mulai Game Baru");
-		button.setPreferredSize(new Dimension(90,30));
+		btnNewGame = new JButton("Mulai Game Baru");
+		btnNewGame.setPreferredSize(new Dimension(90,30));
+		btnNewGame.addActionListener(new Controller(this));
 		c.gridx = 0;
 		c.gridy = 2;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.insets = new Insets(0,10,10,10);
-		panel.add(button, c);
+		panel.add(btnNewGame, c);
 		
 		c.gridx = 1;
 		c.gridy = 0;
@@ -148,6 +155,8 @@ public class View extends JFrame{
 	}
 	
 	public JPanel addLeftGamePanel() {
+		panelsLeft = new JPanel[gameMode][gameMode];
+		
 		JPanel panelMain = new JPanel();
 		panelMain.setLayout(new GridBagLayout());
 	//	panelMain.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
@@ -163,8 +172,8 @@ public class View extends JFrame{
 				c.gridx = j;
 				c.insets = new Insets(2,2,2,2);
 				
-				setPanelsTopAt(panelContent, j, i);
-				panelMain.add(getPanelsTopAt(j, i), c);
+				setPanelsLeftAt(panelContent, j, i);
+				panelMain.add(getPanelsLeftAt(j, i), c);
 			}
 		}
 		
@@ -172,6 +181,8 @@ public class View extends JFrame{
 	}
 	
 	public JPanel addRightGamePanel() {
+		panelsRight = new JPanel[gameMode][gameMode];
+		
 		JPanel panelMain = new JPanel();
 		panelMain.setLayout(new GridBagLayout());
 	//	panelMain.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
@@ -187,8 +198,8 @@ public class View extends JFrame{
 				c.gridx = j;
 				c.insets = new Insets(2,2,2,2);
 				
-				setPanelsBotAt(panelContent, j, i);
-				panelMain.add(getPanelsBotAt(j, i), c);
+				setPanelsRightAt(panelContent, j, i);
+				panelMain.add(getPanelsRightAt(j, i), c);
 			}
 		}
 		
@@ -198,37 +209,65 @@ public class View extends JFrame{
 	public void render() {
 		remove(upperPanel);
 		addMainPanel();
+		comboGameMode.setSelectedIndex(gameMode-2);
+		validate();
 	}
 	
-	public JPanel[][] getPanelsTop(){
-		return panelsTop;
+	
+	
+	public int getGameMode() {
+		return gameMode;
+	}
+
+	public void setGameMode(int gameMode) {
+		this.gameMode = gameMode;
+	}
+
+	public JPanel[][] getPanelsLeft(){
+		return panelsLeft;
 	}
 	
-	public void setPanelsTop(JPanel[][] panelsTop) {
-		this.panelsTop = panelsTop;
+	public void setPanelsLeft(JPanel[][] panelsTop) {
+		this.panelsLeft = panelsTop;
 	}
 	
-	public JPanel getPanelsTopAt(int inX, int inY) {
-		return panelsTop[inX][inY];
+	public JPanel getPanelsLeftAt(int inX, int inY) {
+		return panelsLeft[inX][inY];
 	}
 	
-	public void setPanelsTopAt(JPanel panelTop, int inX, int inY) {
-		this.panelsTop[inX][inY] = panelTop;
+	public void setPanelsLeftAt(JPanel panelTop, int inX, int inY) {
+		this.panelsLeft[inX][inY] = panelTop;
 	}
 	
-	public JPanel[][] getPanelsBot(){
-		return panelsBot;
+	public JPanel[][] getPanelsRight(){
+		return panelsRight;
 	}
 	
-	public void setPanelsBottom(JPanel[][] panelsBot) {
-		this.panelsBot = panelsBot;
+	public void setPanelsRight(JPanel[][] panelsBot) {
+		this.panelsRight = panelsBot;
 	}
 	
-	public JPanel getPanelsBotAt(int inX, int inY) {
-		return panelsBot[inX][inY];
+	public JPanel getPanelsRightAt(int inX, int inY) {
+		return panelsRight[inX][inY];
 	}
 	
-	public void setPanelsBotAt(JPanel panelBot, int inX, int inY) {
-		this.panelsBot[inX][inY] = panelBot;
+	public void setPanelsRightAt(JPanel panelBot, int inX, int inY) {
+		this.panelsRight[inX][inY] = panelBot;
+	}
+	
+	public JButton getBtnNewGame() {
+		return btnNewGame;
+	}
+	
+	public void setBtnNewGame(JButton btnNewGame) {
+		this.btnNewGame = btnNewGame;
+	}
+	
+	public JComboBox<String> getComboGameMode() {
+		return comboGameMode;
+	}
+	
+	public void setComboGameMode(JComboBox<String> comboGameMode) {
+		this.comboGameMode = comboGameMode;
 	}
 }
