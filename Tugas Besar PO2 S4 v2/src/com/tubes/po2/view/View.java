@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -168,6 +169,7 @@ public class View extends JFrame{
 				panelContent = new JPanel();
 				panelContent.setPreferredSize(new Dimension(80,100));
 				panelContent.setBorder(new BevelBorder(BevelBorder.RAISED));
+				panelContent.addMouseListener((MouseListener) new Controller(this, Source.PANEL_LEFT));
 				c.gridy = i;
 				c.gridx = j;
 				c.insets = new Insets(2,2,2,2);
@@ -194,6 +196,7 @@ public class View extends JFrame{
 				panelContent = new JPanel();
 				panelContent.setPreferredSize(new Dimension(80,100));
 				panelContent.setBorder(new BevelBorder(BevelBorder.RAISED));
+				panelContent.addMouseListener((MouseListener) new Controller(this, Source.PANEL_RIGHT));
 				c.gridy = i;
 				c.gridx = j;
 				c.insets = new Insets(2,2,2,2);
