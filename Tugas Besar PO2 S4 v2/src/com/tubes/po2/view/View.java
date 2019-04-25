@@ -3,13 +3,18 @@ package com.tubes.po2.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 
 import com.tubes.po2.src.Source;
 
@@ -25,26 +30,42 @@ public class View extends JFrame{
 	}
 	
 	public void initView() {
-		setLayout(new GridBagLayout());
-		GridBagConstraints cm = new GridBagConstraints(); 
+		JPanel upperPanel = new JPanel();
+		upperPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		upperPanel.setBackground(Color.BLUE);
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+	//	panel.setBackground(Color.CYAN);
+		GridBagConstraints cm = new GridBagConstraints();
 		
 		cm.anchor = GridBagConstraints.NORTHWEST;
 		cm.gridx = 0;
 		cm.gridy = 0;
 		cm.weightx = 0.5;
 		cm.weighty = 0.5;
-		addMainPanel(cm);
+		addMainPanel(panel, cm);
 		
+		//.anchor = GridBagConstraints.NORTHWEST;
+		cm.gridx = 0;
+		cm.gridy = 1;
+		cm.weightx = 0.5;
+		cm.weighty = 0.5;
+		addOptionPanel(panel, cm);
+		
+		upperPanel.add(panel);
+		
+		add(upperPanel, BorderLayout.CENTER);
 		setResizable(true);
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 	
-	public void addMainPanel(GridBagConstraints cm) {
+	public void addMainPanel(JPanel upperPanel, GridBagConstraints cm) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
-		//panel.setBackground(Color.GREEN);
+		panel.setBackground(Color.GREEN);
 		GridBagConstraints c = new GridBagConstraints();
 		
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -62,7 +83,57 @@ public class View extends JFrame{
 		c.insets = new Insets(10,10,10,10);
 		panel.add(addBottomPanel(), c);
 		
-		add(panel, cm);
+		upperPanel.add(panel, cm);
+	}
+	
+	public void addOptionPanel(JPanel upperPanel, GridBagConstraints cm) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		//panel.setBackground(Color.ORANGE);
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.ipadx = 150;
+		c.insets = new Insets(10,10,0,10);
+		panel.add(new JLabel("Pilih game mode : "), c);
+		
+		JComboBox<String> combo = new JComboBox<String>(Source.GAME_MODES);
+		c.gridx = 0;
+		c.gridy = 1;
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.insets = new Insets(0,10,10,10);
+		panel.add(combo, c);
+		
+		JButton button = new JButton("Mulai Game Baru");
+		button.setPreferredSize(new Dimension(90,30));
+		c.gridx = 0;
+		c.gridy = 2;
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.insets = new Insets(0,10,10,10);
+		panel.add(button, c);
+		
+		c.gridx = 1;
+		c.gridy = 0;
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.insets = new Insets(10,10,10,10);
+		panel.add(new JLabel("Timer : "), c);
+		
+		c.anchor = GridBagConstraints.NORTHEAST;
+		c.gridx = 2;
+		c.gridy = 0;
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.insets = new Insets(10,10,10,10);
+		panel.add(new JLabel("Score : "), c);
+		
+		upperPanel.add(panel, cm);
 	}
 	
 	public JPanel addTopPanel() {
