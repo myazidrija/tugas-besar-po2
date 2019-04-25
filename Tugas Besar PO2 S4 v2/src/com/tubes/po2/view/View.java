@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 
 import com.tubes.po2.src.Source;
 
@@ -25,14 +26,26 @@ public class View extends JFrame{
 	private JPanel panelsTop[][] = new JPanel[gameMode][gameMode];
 	private JPanel panelsBot[][] = new JPanel[gameMode][gameMode];
 	
+	private JPanel upperPanel;
+	
 	public View() {
 		super("Game Tebak Tempel");
 	}
 	
 	public void initView() {
-		JPanel upperPanel = new JPanel();
+		addMainPanel();
+		
+		add(upperPanel, BorderLayout.CENTER);
+		setResizable(true);
+		pack();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	public void addMainPanel() {
+		upperPanel = new JPanel();
 		upperPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		upperPanel.setBackground(Color.BLUE);
+	//	upperPanel.setBackground(Color.BLUE);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -44,7 +57,7 @@ public class View extends JFrame{
 		cm.gridy = 0;
 		cm.weightx = 0.5;
 		cm.weighty = 0.5;
-		addMainPanel(panel, cm);
+		addGamePanel(panel, cm);
 		
 		//.anchor = GridBagConstraints.NORTHWEST;
 		cm.gridx = 0;
@@ -54,18 +67,14 @@ public class View extends JFrame{
 		addOptionPanel(panel, cm);
 		
 		upperPanel.add(panel);
-		
-		add(upperPanel, BorderLayout.CENTER);
-		setResizable(true);
-		pack();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
 	}
 	
-	public void addMainPanel(JPanel upperPanel, GridBagConstraints cm) {
+	public void addGamePanel(JPanel upperPanel, GridBagConstraints cm) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
-		panel.setBackground(Color.GREEN);
+		panel.setPreferredSize(new Dimension(720, 440));
+		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
+	//	panel.setBackground(Color.GREEN);
 		GridBagConstraints c = new GridBagConstraints();
 		
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -74,14 +83,14 @@ public class View extends JFrame{
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.insets = new Insets(10,10,10,10);
-		panel.add(addTopPanel(), c);
+		panel.add(addLeftGamePanel(), c);
 		
 		c.gridx = 1;
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.insets = new Insets(10,10,10,10);
-		panel.add(addBottomPanel(), c);
+		panel.add(addRightGamePanel(), c);
 		
 		upperPanel.add(panel, cm);
 	}
@@ -89,6 +98,7 @@ public class View extends JFrame{
 	public void addOptionPanel(JPanel upperPanel, GridBagConstraints cm) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
+		panel.setBorder(new EtchedBorder(EtchedBorder.RAISED));
 		//panel.setBackground(Color.ORANGE);
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -130,15 +140,17 @@ public class View extends JFrame{
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
+		c.ipadx = 167;
 		c.insets = new Insets(10,10,10,10);
 		panel.add(new JLabel("Score : "), c);
 		
 		upperPanel.add(panel, cm);
 	}
 	
-	public JPanel addTopPanel() {
+	public JPanel addLeftGamePanel() {
 		JPanel panelMain = new JPanel();
 		panelMain.setLayout(new GridBagLayout());
+	//	panelMain.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
 		GridBagConstraints c = new GridBagConstraints();
 		
 		JPanel panelContent;
@@ -159,9 +171,10 @@ public class View extends JFrame{
 		return panelMain;
 	}
 	
-	public JPanel addBottomPanel() {
+	public JPanel addRightGamePanel() {
 		JPanel panelMain = new JPanel();
 		panelMain.setLayout(new GridBagLayout());
+	//	panelMain.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
 		GridBagConstraints c = new GridBagConstraints();
 		
 		JPanel panelContent;
@@ -180,6 +193,11 @@ public class View extends JFrame{
 		}
 		
 		return panelMain;
+	}
+	
+	public void render() {
+		remove(upperPanel);
+		addMainPanel();
 	}
 	
 	public JPanel[][] getPanelsTop(){
