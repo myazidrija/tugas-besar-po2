@@ -44,6 +44,8 @@ public class View extends JFrame{
 	private JComboBox<String> comboGameMode = new JComboBox<String>(Source.GAME_MODES);
 	
 	private JPanel upperPanel;
+	private JPanel mainContainerPanel;
+	private JPanel gamePanel;
 	
 	private JLabel lTimer = new JLabel("Timer : ");
 	private int timeCount = 0;
@@ -66,8 +68,8 @@ public class View extends JFrame{
 		upperPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 	//	upperPanel.setBackground(Color.BLUE);
 		
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridBagLayout());
+		mainContainerPanel = new JPanel();
+		mainContainerPanel.setLayout(new GridBagLayout());
 	//	panel.setBackground(Color.CYAN);
 		GridBagConstraints cm = new GridBagConstraints();
 		
@@ -76,24 +78,24 @@ public class View extends JFrame{
 		cm.gridy = 0;
 		cm.weightx = 0.5;
 		cm.weighty = 0.5;
-		addGamePanel(panel, cm);
+		mainContainerPanel.add(addGamePanel(), cm);
 		
 		//.anchor = GridBagConstraints.NORTHWEST;
 		cm.gridx = 0;
 		cm.gridy = 1;
 		cm.weightx = 0.5;
 		cm.weighty = 0.5;
-		addOptionPanel(panel, cm);
+		mainContainerPanel.add(addOptionPanel(), cm);
 		
-		upperPanel.add(panel);
+		upperPanel.add(mainContainerPanel);
 		add(upperPanel, BorderLayout.CENTER);
 	}
 	
-	public void addGamePanel(JPanel upperPanel, GridBagConstraints cm) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridBagLayout());
-		panel.setPreferredSize(new Dimension(720, 440));
-		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
+	public JPanel addGamePanel() {
+		gamePanel = new JPanel();
+		gamePanel.setLayout(new GridBagLayout());
+		gamePanel.setPreferredSize(new Dimension(720, 440));
+		gamePanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
 	//	panel.setBackground(Color.GREEN);
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -103,19 +105,19 @@ public class View extends JFrame{
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.insets = new Insets(10,10,10,10);
-		panel.add(addLeftGamePanel(), c);
+		gamePanel.add(addLeftGamePanel(), c);
 		
 		c.gridx = 1;
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.insets = new Insets(10,10,10,10);
-		panel.add(addRightGamePanel(), c);
+		gamePanel.add(addRightGamePanel(), c);
 		
-		upperPanel.add(panel, cm);
+		return gamePanel;
 	}
 	
-	public void addOptionPanel(JPanel upperPanel, GridBagConstraints cm) {
+	public JPanel addOptionPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		panel.setBorder(new EtchedBorder(EtchedBorder.RAISED));
@@ -166,7 +168,7 @@ public class View extends JFrame{
 		c.insets = new Insets(10,10,10,10);
 		panel.add(new JLabel("Score : "), c);
 		
-		upperPanel.add(panel, cm);
+		return panel;
 	}
 	
 	public void timer() {
@@ -287,18 +289,23 @@ public class View extends JFrame{
 	}
 	
 	public void render() {
-		remove(upperPanel);
-		addMainPanel();
+		mainContainerPanel.remove(gamePanel);
+		GridBagConstraints cm = new GridBagConstraints();
+		
+		cm.anchor = GridBagConstraints.NORTHWEST;
+		cm.gridx = 0;
+		cm.gridy = 0;
+		cm.weightx = 0.5;
+		cm.weighty = 0.5;
+		mainContainerPanel.add(addGamePanel(), cm);
 		
 		comboGameMode.setSelectedIndex(gameMode-2);
 		
 		isPanelLeftActive = false;
 		isPanelRightActive = false;
 		
-		validate();
+		mainContainerPanel.validate();
 	}
-	
-	
 	
 	public int getGameMode() {
 		return gameMode;
