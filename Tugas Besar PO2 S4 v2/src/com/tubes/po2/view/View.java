@@ -30,8 +30,13 @@ public class View extends JFrame{
 	private JPanel panelsLeft[][];
 	private JPanel panelsRight[][];
 	
+	private JLabel labelsPanelLeft[][];
+	private JLabel labelsPanelRight[][];
+	private boolean isPanelLeftActive = false;
+	private boolean isPanelRightActive = false;
+	
 	private JButton btnNewGame;
-	private JComboBox<String> comboGameMode;
+	private JComboBox<String> comboGameMode = new JComboBox<String>(Source.GAME_MODES);
 	
 	private JPanel upperPanel;
 	
@@ -118,7 +123,6 @@ public class View extends JFrame{
 		c.insets = new Insets(10,10,0,10);
 		panel.add(new JLabel("Pilih game mode : "), c);
 		
-		comboGameMode = new JComboBox<String>(Source.GAME_MODES);
 		comboGameMode.addItemListener((ItemListener) new Controller(this));
 		c.gridx = 0;
 		c.gridy = 1;
@@ -158,6 +162,21 @@ public class View extends JFrame{
 	
 	public JPanel addLeftGamePanel() {
 		panelsLeft = new JPanel[gameMode][gameMode];
+		labelsPanelLeft = new JLabel[gameMode][gameMode];
+		
+		String gameData[][] = null;
+		switch(comboGameMode.getSelectedIndex()) {
+		case 0:
+			gameData = Source.DATA_GAME_MODE2x2;
+			break;
+		case 1:
+			gameData = Source.DATA_GAME_MODE3x3;
+			break;
+		case 2:
+			gameData = Source.DATA_GAME_MODE4x4;
+			break;
+		}
+		Source.shuffle(gameData);
 		
 		JPanel panelMain = new JPanel();
 		panelMain.setLayout(new GridBagLayout());
@@ -168,10 +187,17 @@ public class View extends JFrame{
 		for(int i=0; i<gameMode; i++) {
 			for(int j=0; j<gameMode; j++) {
 				panelContent = new JPanel();
+				labelsPanelLeft[i][j] = new JLabel();
+				
 				panelContent.setBackground(Color.BLUE);
 				panelContent.setPreferredSize(new Dimension(80,100));
 				panelContent.setBorder(new LineBorder(Color.BLACK, 2));
 				panelContent.addMouseListener(new Controller(this, Source.PANEL_LEFT));
+				
+				labelsPanelLeft[i][j].setText(gameData[i][j]);
+				labelsPanelLeft[i][j].setVisible(false);
+				panelContent.add(labelsPanelLeft[i][j]);
+				
 				c.gridy = i;
 				c.gridx = j;
 				c.insets = new Insets(2,2,2,2);
@@ -186,6 +212,21 @@ public class View extends JFrame{
 	
 	public JPanel addRightGamePanel() {
 		panelsRight = new JPanel[gameMode][gameMode];
+		labelsPanelRight = new JLabel[gameMode][gameMode];
+		
+		String gameData[][] = null;
+		switch(comboGameMode.getSelectedIndex()) {
+		case 0:
+			gameData = Source.DATA_GAME_MODE2x2;
+			break;
+		case 1:
+			gameData = Source.DATA_GAME_MODE3x3;
+			break;
+		case 2:
+			gameData = Source.DATA_GAME_MODE4x4;
+			break;
+		}
+		Source.shuffle(gameData);
 		
 		JPanel panelMain = new JPanel();
 		panelMain.setLayout(new GridBagLayout());
@@ -196,10 +237,17 @@ public class View extends JFrame{
 		for(int i=0; i<gameMode; i++) {
 			for(int j=0; j<gameMode; j++) {
 				panelContent = new JPanel();
+				labelsPanelRight[i][j] = new JLabel();
+				
 				panelContent.setBackground(Color.BLUE);
 				panelContent.setPreferredSize(new Dimension(80,100));
 				panelContent.setBorder(new LineBorder(Color.BLACK, 2));
 				panelContent.addMouseListener(new Controller(this, Source.PANEL_RIGHT));
+				
+				labelsPanelRight[i][j].setText(gameData[i][j]);
+				labelsPanelRight[i][j].setVisible(false);
+				panelContent.add(labelsPanelRight[i][j]);
+				
 				c.gridy = i;
 				c.gridx = j;
 				c.insets = new Insets(2,2,2,2);
@@ -241,6 +289,30 @@ public class View extends JFrame{
 		return panelsLeft[inX][inY];
 	}
 	
+	public JLabel getLabelsLeftAt(int inX, int inY) {
+		return labelsPanelLeft[inX][inY];
+	}
+	
+	public JLabel getLabelsRightAt(int inX, int inY) {
+		return labelsPanelRight[inX][inY];
+	}
+	
+	public boolean isPanelLeftActive() {
+		return isPanelLeftActive;
+	}
+
+	public void setPanelLeftActive(boolean isPanelLeftActive) {
+		this.isPanelLeftActive = isPanelLeftActive;
+	}
+
+	public boolean isPanelRightActive() {
+		return isPanelRightActive;
+	}
+
+	public void setPanelRightActive(boolean isPanelRightActive) {
+		this.isPanelRightActive = isPanelRightActive;
+	}
+
 	public void setPanelsLeftAt(JPanel panelTop, int inX, int inY) {
 		this.panelsLeft[inX][inY] = panelTop;
 	}
@@ -260,7 +332,7 @@ public class View extends JFrame{
 	public void setPanelsRightAt(JPanel panelBot, int inX, int inY) {
 		this.panelsRight[inX][inY] = panelBot;
 	}
-	
+
 	public JButton getBtnNewGame() {
 		return btnNewGame;
 	}

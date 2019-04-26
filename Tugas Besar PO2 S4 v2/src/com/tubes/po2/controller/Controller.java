@@ -74,6 +74,7 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 				for(int j=0; j<view.getGameMode(); j++) {
 					if(e.getSource() == view.getPanelsLeftAt(j, i)) {
 						view.getPanelsLeftAt(j, i).setBackground(Color.WHITE);
+						view.getLabelsLeftAt(i, j).setVisible(true);
 					}
 				}
 			}
@@ -82,6 +83,7 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 				for(int j=0; j<view.getGameMode(); j++) {
 					if(e.getSource() == view.getPanelsRightAt(j, i)) {
 						view.getPanelsRightAt(j, i).setBackground(Color.WHITE);
+						view.getLabelsRightAt(i, j).setVisible(true);
 					}
 				}
 			}
