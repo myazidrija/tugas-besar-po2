@@ -69,11 +69,11 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(panelPosition.equals(Source.PANEL_LEFT)) {
+		if(panelPosition.equals(Source.PANEL_LEFT)) {  
 			for(int i=0; i<view.getGameMode(); i++) {
 				for(int j=0; j<view.getGameMode(); j++) {
 					if(e.getSource() == view.getPanelsLeftAt(j, i)) {
-						view.getPanelsLeftAt(j, i).setBackground(Color.ORANGE);
+						view.getPanelsLeftAt(j, i).setBackground(Color.WHITE);
 					}
 				}
 			}
@@ -81,7 +81,7 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 			for(int i=0; i<view.getGameMode(); i++) {
 				for(int j=0; j<view.getGameMode(); j++) {
 					if(e.getSource() == view.getPanelsRightAt(j, i)) {
-						view.getPanelsRightAt(j, i).setBackground(Color.ORANGE);
+						view.getPanelsRightAt(j, i).setBackground(Color.WHITE);
 					}
 				}
 			}

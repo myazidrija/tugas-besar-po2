@@ -8,5 +8,9 @@ public class Source {
 	public static final int GAME_MODE3X3 = 3;
 	public static final int GAME_MODE4X4 = 4;
 	
+	public static final String[][] DATA_GAME_MODE2x2= new String[][] {
+		
+	};
+	
 	public static final String[] GAME_MODES= new String[] {"Mode : 2x2", "Mode : 3x3", "Mode : 4x4"};
 }

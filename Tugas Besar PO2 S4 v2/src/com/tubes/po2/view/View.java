@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 
 import com.tubes.po2.controller.Controller;
 import com.tubes.po2.src.Source;
@@ -167,9 +168,10 @@ public class View extends JFrame{
 		for(int i=0; i<gameMode; i++) {
 			for(int j=0; j<gameMode; j++) {
 				panelContent = new JPanel();
+				panelContent.setBackground(Color.BLUE);
 				panelContent.setPreferredSize(new Dimension(80,100));
-				panelContent.setBorder(new BevelBorder(BevelBorder.RAISED));
-				panelContent.addMouseListener((MouseListener) new Controller(this, Source.PANEL_LEFT));
+				panelContent.setBorder(new LineBorder(Color.BLACK, 2));
+				panelContent.addMouseListener(new Controller(this, Source.PANEL_LEFT));
 				c.gridy = i;
 				c.gridx = j;
 				c.insets = new Insets(2,2,2,2);
@@ -194,9 +196,10 @@ public class View extends JFrame{
 		for(int i=0; i<gameMode; i++) {
 			for(int j=0; j<gameMode; j++) {
 				panelContent = new JPanel();
+				panelContent.setBackground(Color.BLUE);
 				panelContent.setPreferredSize(new Dimension(80,100));
-				panelContent.setBorder(new BevelBorder(BevelBorder.RAISED));
-				panelContent.addMouseListener((MouseListener) new Controller(this, Source.PANEL_RIGHT));
+				panelContent.setBorder(new LineBorder(Color.BLACK, 2));
+				panelContent.addMouseListener(new Controller(this, Source.PANEL_RIGHT));
 				c.gridy = i;
 				c.gridx = j;
 				c.insets = new Insets(2,2,2,2);
