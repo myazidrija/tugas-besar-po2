@@ -30,6 +30,7 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == view.getBtnNewGame()) {
+			view.setReset(true);
 			view.render();
 		}
 	}
@@ -84,6 +85,7 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 									view.getLabelsLeftAt(i, j).setVisible(true);
 									view.setPanelLeftActive(false);
 									view.setPanelRightActive(false);
+									view.setReset(true);
 								} else {
 									closedAnimation(i, j, x, y);
 //									view.getPanelsRightAt(x, y).setBackground(Color.BLUE);
@@ -119,6 +121,7 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 									view.getLabelsRightAt(i, j).setVisible(true);
 									view.setPanelRightActive(false);
 									view.setPanelLeftActive(false);
+									view.setReset(true);
 								} else {
 									closedAnimation(i, j, x, y);
 //									view.getPanelsLeftAt(x, y).setBackground(Color.BLUE);

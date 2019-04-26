@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
@@ -41,17 +42,21 @@ public class View extends JFrame{
 	private int panelRightActiveIndexY;
 	
 	private JButton btnNewGame;
-	private JComboBox<String> comboGameMode = new JComboBox<String>(Source.GAME_MODES);
+	private JComboBox<String> comboGameMode;
 	
 	private JPanel upperPanel;
 	private JPanel mainContainerPanel;
 	private JPanel gamePanel;
 	
-	private JLabel lTimer = new JLabel("Timer : ");
+	private JLabel lTimer;
 	private int timeCount = 0;
+	private int timeLimit = 10;
+	private boolean isReset = false;
 	
 	public View() {
 		super("Game Tebak Tempel");
+		comboGameMode = new JComboBox<String>(Source.GAME_MODES);
+		lTimer = new JLabel();
 	}
 	
 	public void initView() {
@@ -174,11 +179,22 @@ public class View extends JFrame{
 	public void timer() {
 		Thread thread = new Thread() {
 			public void run() {
-				for(int i=0; i<100; i++) {
+				for(int i=1; i<=timeLimit; i++) {
 					try {
-						lTimer.setText("Timer : "+timeCount);
-						timeCount++;
-						Thread.sleep(1000);
+						if(!isReset) {
+							timeCount = i;
+							lTimer.setText("Timer : "+timeCount+"s           (Limit : 10s)");
+							if(timeCount == 10) {
+								JOptionPane.showMessageDialog(null, "Anda kalah, karena kehabisan waktu");
+								render();
+								i = 0;
+							}
+							Thread.sleep(1000);
+						} else {
+							setReset(false);
+							i = 0;
+							timeCount = i;
+						}
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -299,8 +315,6 @@ public class View extends JFrame{
 		cm.weighty = 0.5;
 		mainContainerPanel.add(addGamePanel(), cm);
 		
-		comboGameMode.setSelectedIndex(gameMode-2);
-		
 		isPanelLeftActive = false;
 		isPanelRightActive = false;
 		
@@ -412,4 +426,14 @@ public class View extends JFrame{
 		this.panelRightActiveIndexX = x;
 		this.panelRightActiveIndexY = y;
 	}
+
+	public boolean isReset() {
+		return isReset;
+	}
+
+	public void setReset(boolean isReset) {
+		this.isReset = isReset;
+	}
+	
+	
 }
