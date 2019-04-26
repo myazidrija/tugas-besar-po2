@@ -72,18 +72,58 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 		if(panelPosition.equals(Source.PANEL_LEFT)) {  
 			for(int i=0; i<view.getGameMode(); i++) {
 				for(int j=0; j<view.getGameMode(); j++) {
-					if(e.getSource() == view.getPanelsLeftAt(j, i)) {
-						view.getPanelsLeftAt(j, i).setBackground(Color.WHITE);
-						view.getLabelsLeftAt(i, j).setVisible(true);
+					if(e.getSource() == view.getPanelsLeftAt(i, j)) {
+						if(view.isPanelRightActive()) {
+							int x = view.getPanelRightActiveIndexX();
+							int y = view.getPanelRightActiveIndexY();
+							
+							if(view.getLabelsLeftAt(i, j).getText()
+									.equals(view.getLabelsRightAt(x, y).getText())) {
+								view.getPanelsLeftAt(i, j).setBackground(Color.WHITE);
+								view.getLabelsLeftAt(i, j).setVisible(true);
+								view.setPanelLeftActive(false);
+								view.setPanelRightActive(false);
+							} else {
+								view.getPanelsRightAt(x, y).setBackground(Color.BLUE);
+								view.getLabelsRightAt(x, y).setVisible(false);
+								view.setPanelRightActive(false);
+							}
+							
+						} else {
+							view.getPanelsLeftAt(i, j).setBackground(Color.WHITE);
+							view.getLabelsLeftAt(i, j).setVisible(true);
+							view.setPanelLeftActiveIndex(i, j);
+							view.setPanelLeftActive(true);
+						}
 					}
 				}
 			}
 		} else {
 			for(int i=0; i<view.getGameMode(); i++) {
 				for(int j=0; j<view.getGameMode(); j++) {
-					if(e.getSource() == view.getPanelsRightAt(j, i)) {
-						view.getPanelsRightAt(j, i).setBackground(Color.WHITE);
-						view.getLabelsRightAt(i, j).setVisible(true);
+					if(e.getSource() == view.getPanelsRightAt(i, j)) {
+						if(view.isPanelLeftActive()) {
+							int x = view.getPanelLeftActiveIndexX();
+							int y = view.getPanelLeftActiveIndexY();
+							
+							if(view.getLabelsRightAt(i, j).getText()
+									.equals(view.getLabelsLeftAt(x, y).getText())) {
+								view.getPanelsRightAt(i, j).setBackground(Color.WHITE);
+								view.getLabelsRightAt(i, j).setVisible(true);
+								view.setPanelRightActive(false);
+								view.setPanelLeftActive(false);
+							} else {
+								view.getPanelsLeftAt(x, y).setBackground(Color.BLUE);
+								view.getLabelsLeftAt(x, y).setVisible(false);
+								view.setPanelLeftActive(false);
+							}
+							
+						} else {
+							view.getPanelsRightAt(i, j).setBackground(Color.WHITE);
+							view.getLabelsRightAt(i, j).setVisible(true);
+							view.setPanelRightActiveIndex(i, j);
+							view.setPanelRightActive(true);
+						}
 					}
 				}
 			}

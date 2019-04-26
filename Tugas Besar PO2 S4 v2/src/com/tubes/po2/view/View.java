@@ -35,6 +35,11 @@ public class View extends JFrame{
 	private boolean isPanelLeftActive = false;
 	private boolean isPanelRightActive = false;
 	
+	private int panelLeftActiveIndexX;
+	private int panelLeftActiveIndexY;
+	private int panelRightActiveIndexX;
+	private int panelRightActiveIndexY;
+	
 	private JButton btnNewGame;
 	private JComboBox<String> comboGameMode = new JComboBox<String>(Source.GAME_MODES);
 	
@@ -202,8 +207,8 @@ public class View extends JFrame{
 				c.gridx = j;
 				c.insets = new Insets(2,2,2,2);
 				
-				setPanelsLeftAt(panelContent, j, i);
-				panelMain.add(getPanelsLeftAt(j, i), c);
+				setPanelsLeftAt(panelContent, i, j);
+				panelMain.add(getPanelsLeftAt(i, j), c);
 			}
 		}
 		
@@ -252,8 +257,8 @@ public class View extends JFrame{
 				c.gridx = j;
 				c.insets = new Insets(2,2,2,2);
 				
-				setPanelsRightAt(panelContent, j, i);
-				panelMain.add(getPanelsRightAt(j, i), c);
+				setPanelsRightAt(panelContent, i, j);
+				panelMain.add(getPanelsRightAt(i, j), c);
 			}
 		}
 		
@@ -285,16 +290,16 @@ public class View extends JFrame{
 		this.panelsLeft = panelsTop;
 	}
 	
-	public JPanel getPanelsLeftAt(int inX, int inY) {
-		return panelsLeft[inX][inY];
+	public JPanel getPanelsLeftAt(int x, int y) {
+		return panelsLeft[x][y];
 	}
 	
 	public JLabel getLabelsLeftAt(int inX, int inY) {
 		return labelsPanelLeft[inX][inY];
 	}
 	
-	public JLabel getLabelsRightAt(int inX, int inY) {
-		return labelsPanelRight[inX][inY];
+	public JLabel getLabelsRightAt(int x, int y) {
+		return labelsPanelRight[x][y];
 	}
 	
 	public boolean isPanelLeftActive() {
@@ -313,8 +318,8 @@ public class View extends JFrame{
 		this.isPanelRightActive = isPanelRightActive;
 	}
 
-	public void setPanelsLeftAt(JPanel panelTop, int inX, int inY) {
-		this.panelsLeft[inX][inY] = panelTop;
+	public void setPanelsLeftAt(JPanel panelTop, int x, int y) {
+		this.panelsLeft[x][y] = panelTop;
 	}
 	
 	public JPanel[][] getPanelsRight(){
@@ -325,12 +330,12 @@ public class View extends JFrame{
 		this.panelsRight = panelsBot;
 	}
 	
-	public JPanel getPanelsRightAt(int inX, int inY) {
-		return panelsRight[inX][inY];
+	public JPanel getPanelsRightAt(int x, int y) {
+		return panelsRight[x][y];
 	}
 	
-	public void setPanelsRightAt(JPanel panelBot, int inX, int inY) {
-		this.panelsRight[inX][inY] = panelBot;
+	public void setPanelsRightAt(JPanel panelBot, int x, int y) {
+		this.panelsRight[x][y] = panelBot;
 	}
 
 	public JButton getBtnNewGame() {
@@ -347,5 +352,31 @@ public class View extends JFrame{
 	
 	public void setComboGameMode(JComboBox<String> comboGameMode) {
 		this.comboGameMode = comboGameMode;
+	}
+
+	public int getPanelLeftActiveIndexX() {
+		return panelLeftActiveIndexX;
+	}
+
+	public int getPanelLeftActiveIndexY() {
+		return panelLeftActiveIndexY;
+	}
+	
+	public void setPanelLeftActiveIndex(int x, int y) {
+		this.panelLeftActiveIndexX = x;
+		this.panelLeftActiveIndexY = y;
+	}
+
+	public int getPanelRightActiveIndexX() {
+		return panelRightActiveIndexX;
+	}
+
+	public int getPanelRightActiveIndexY() {
+		return panelRightActiveIndexY;
+	}
+	
+	public void setPanelRightActiveIndex(int x, int y) {
+		this.panelRightActiveIndexX = x;
+		this.panelRightActiveIndexY = y;
 	}
 }
