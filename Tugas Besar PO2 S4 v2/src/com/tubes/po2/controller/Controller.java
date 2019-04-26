@@ -73,27 +73,33 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 			for(int i=0; i<view.getGameMode(); i++) {
 				for(int j=0; j<view.getGameMode(); j++) {
 					if(e.getSource() == view.getPanelsLeftAt(i, j)) {
+						int x = view.getPanelRightActiveIndexX();
+						int y = view.getPanelRightActiveIndexY();
+						
 						if(view.isPanelRightActive()) {
-							int x = view.getPanelRightActiveIndexX();
-							int y = view.getPanelRightActiveIndexY();
-							
-							if(view.getLabelsLeftAt(i, j).getText()
-									.equals(view.getLabelsRightAt(x, y).getText())) {
-								view.getPanelsLeftAt(i, j).setBackground(Color.WHITE);
-								view.getLabelsLeftAt(i, j).setVisible(true);
-								view.setPanelLeftActive(false);
-								view.setPanelRightActive(false);
-							} else {
-								view.getPanelsRightAt(x, y).setBackground(Color.BLUE);
-								view.getLabelsRightAt(x, y).setVisible(false);
-								view.setPanelRightActive(false);
+							if(!view.getLabelsLeftAt(i, j).isVisible()) {
+								if(view.getLabelsLeftAt(i, j).getText()
+										.equals(view.getLabelsRightAt(x, y).getText())) {
+									view.getPanelsLeftAt(i, j).setBackground(Color.WHITE);
+									view.getLabelsLeftAt(i, j).setVisible(true);
+									view.setPanelLeftActive(false);
+									view.setPanelRightActive(false);
+								} else {
+									closedAnimation(i, j, x, y);
+//									view.getPanelsRightAt(x, y).setBackground(Color.BLUE);
+//									view.getLabelsRightAt(x, y).setVisible(false);
+//									view.setPanelRightActive(false);
+								}
 							}
-							
 						} else {
-							view.getPanelsLeftAt(i, j).setBackground(Color.WHITE);
-							view.getLabelsLeftAt(i, j).setVisible(true);
-							view.setPanelLeftActiveIndex(i, j);
-							view.setPanelLeftActive(true);
+							if(!view.isPanelLeftActive()) {
+								if(!view.getLabelsLeftAt(i, j).isVisible()) {
+									view.getPanelsLeftAt(i, j).setBackground(Color.WHITE);
+									view.getLabelsLeftAt(i, j).setVisible(true);
+									view.setPanelLeftActiveIndex(i, j);
+									view.setPanelLeftActive(true);
+								}
+							}
 						}
 					}
 				}
@@ -102,27 +108,34 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 			for(int i=0; i<view.getGameMode(); i++) {
 				for(int j=0; j<view.getGameMode(); j++) {
 					if(e.getSource() == view.getPanelsRightAt(i, j)) {
+						int x = view.getPanelLeftActiveIndexX();
+						int y = view.getPanelLeftActiveIndexY();
+						
 						if(view.isPanelLeftActive()) {
-							int x = view.getPanelLeftActiveIndexX();
-							int y = view.getPanelLeftActiveIndexY();
-							
-							if(view.getLabelsRightAt(i, j).getText()
-									.equals(view.getLabelsLeftAt(x, y).getText())) {
-								view.getPanelsRightAt(i, j).setBackground(Color.WHITE);
-								view.getLabelsRightAt(i, j).setVisible(true);
-								view.setPanelRightActive(false);
-								view.setPanelLeftActive(false);
-							} else {
-								view.getPanelsLeftAt(x, y).setBackground(Color.BLUE);
-								view.getLabelsLeftAt(x, y).setVisible(false);
-								view.setPanelLeftActive(false);
+							if(!view.getLabelsRightAt(i, j).isVisible()) {
+								if(view.getLabelsRightAt(i, j).getText()
+										.equals(view.getLabelsLeftAt(x, y).getText())) {
+									view.getPanelsRightAt(i, j).setBackground(Color.WHITE);
+									view.getLabelsRightAt(i, j).setVisible(true);
+									view.setPanelRightActive(false);
+									view.setPanelLeftActive(false);
+								} else {
+									closedAnimation(i, j, x, y);
+//									view.getPanelsLeftAt(x, y).setBackground(Color.BLUE);
+//									view.getLabelsLeftAt(x, y).setVisible(false);
+//									view.setPanelLeftActive(false);
+								}
 							}
 							
 						} else {
-							view.getPanelsRightAt(i, j).setBackground(Color.WHITE);
-							view.getLabelsRightAt(i, j).setVisible(true);
-							view.setPanelRightActiveIndex(i, j);
-							view.setPanelRightActive(true);
+							if(!view.isPanelRightActive()) {
+								if(!view.getLabelsRightAt(i, j).isVisible()) {
+									view.getPanelsRightAt(i, j).setBackground(Color.WHITE);
+									view.getLabelsRightAt(i, j).setVisible(true);
+									view.setPanelRightActiveIndex(i, j);
+									view.setPanelRightActive(true);
+								}
+							}
 						}
 					}
 				}
@@ -135,4 +148,39 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 		
 	}
 
+	public void closedAnimation(int x1, int y1, int x2, int y2) {
+		Thread thread = new Thread() {
+			public void run() {
+				if(panelPosition.equals(Source.PANEL_RIGHT)) {
+					try {
+						view.getPanelsRightAt(x1, y1).setBackground(Color.WHITE);
+						view.getLabelsRightAt(x1, y1).setVisible(true);
+						Thread.sleep(400);
+						view.getPanelsRightAt(x1, y1).setBackground(Color.BLUE);
+						view.getLabelsRightAt(x1, y1).setVisible(false);
+						view.getPanelsLeftAt(x2, y2).setBackground(Color.BLUE);
+						view.getLabelsLeftAt(x2, y2).setVisible(false);
+						view.setPanelLeftActive(false);
+					} catch(Exception e){
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						view.getPanelsLeftAt(x1, y1).setBackground(Color.WHITE);
+						view.getLabelsLeftAt(x1, y1).setVisible(true);
+						Thread.sleep(400);
+						view.getPanelsLeftAt(x1, y1).setBackground(Color.BLUE);
+						view.getLabelsLeftAt(x1, y1).setVisible(false);
+						view.getPanelsRightAt(x2, y2).setBackground(Color.BLUE);
+						view.getLabelsRightAt(x2, y2).setVisible(false);
+						view.setPanelRightActive(false);
+					} catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		thread.start();
+	}
+	
 }

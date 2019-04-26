@@ -268,7 +268,12 @@ public class View extends JFrame{
 	public void render() {
 		remove(upperPanel);
 		addMainPanel();
+		
 		comboGameMode.setSelectedIndex(gameMode-2);
+		
+		isPanelLeftActive = false;
+		isPanelRightActive = false;
+		
 		validate();
 	}
 	
@@ -294,8 +299,8 @@ public class View extends JFrame{
 		return panelsLeft[x][y];
 	}
 	
-	public JLabel getLabelsLeftAt(int inX, int inY) {
-		return labelsPanelLeft[inX][inY];
+	public JLabel getLabelsLeftAt(int x, int y) {
+		return labelsPanelLeft[x][y];
 	}
 	
 	public JLabel getLabelsRightAt(int x, int y) {
