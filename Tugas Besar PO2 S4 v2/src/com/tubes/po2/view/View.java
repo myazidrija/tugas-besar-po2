@@ -45,6 +45,9 @@ public class View extends JFrame{
 	
 	private JPanel upperPanel;
 	
+	private JLabel lTimer = new JLabel("Timer : ");
+	private int timeCount = 0;
+	
 	public View() {
 		super("Game Tebak Tempel");
 	}
@@ -151,7 +154,8 @@ public class View extends JFrame{
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.insets = new Insets(10,10,10,10);
-		panel.add(new JLabel("Timer : "), c);
+		timer();
+		panel.add(lTimer, c);
 		
 		c.anchor = GridBagConstraints.NORTHEAST;
 		c.gridx = 2;
@@ -163,6 +167,23 @@ public class View extends JFrame{
 		panel.add(new JLabel("Score : "), c);
 		
 		upperPanel.add(panel, cm);
+	}
+	
+	public void timer() {
+		Thread thread = new Thread() {
+			public void run() {
+				for(int i=0; i<100; i++) {
+					try {
+						lTimer.setText("Timer : "+timeCount);
+						timeCount++;
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		thread.start();
 	}
 	
 	public JPanel addLeftGamePanel() {
