@@ -160,6 +160,7 @@ public class View extends JFrame{
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
+		c.ipadx = 100;
 		c.insets = new Insets(10,10,10,10);
 		timer();
 		panel.add(lTimer, c);
@@ -169,7 +170,7 @@ public class View extends JFrame{
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
-		c.ipadx = 167;
+		c.ipadx = 105;
 		c.insets = new Insets(10,10,10,10);
 		panel.add(new JLabel("Score : "), c);
 		
