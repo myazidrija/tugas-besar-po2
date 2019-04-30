@@ -8,7 +8,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import com.tubes.po2.src.Source;
 import com.tubes.po2.view.View;
@@ -17,7 +17,8 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 
 	private View view;
 	private String panelPosition;
-	
+	private int option;
+
 	public Controller(View view) {
 		this.view = view;
 	}
@@ -86,11 +87,22 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 									view.setPanelLeftActive(false);
 									view.setPanelRightActive(false);
 									view.setReset(true);
+									if(isConditionWin()){
+										option = JOptionPane.showConfirmDialog(null
+												, "Anda menang, mau main lagi?"
+												, "Game Over"
+												, JOptionPane.OK_CANCEL_OPTION
+												, JOptionPane.QUESTION_MESSAGE
+												, null);
+										if(option == 0){
+											view.render();
+											view.setReset(true);
+										} else {
+											System.exit(0);
+										}
+									}
 								} else {
 									closedAnimation(i, j, x, y);
-//									view.getPanelsRightAt(x, y).setBackground(Color.BLUE);
-//									view.getLabelsRightAt(x, y).setVisible(false);
-//									view.setPanelRightActive(false);
 								}
 							}
 						} else {
@@ -122,11 +134,22 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 									view.setPanelRightActive(false);
 									view.setPanelLeftActive(false);
 									view.setReset(true);
+									if(isConditionWin()){
+										option = JOptionPane.showConfirmDialog(null
+												, "Anda menang, mau main lagi?"
+												, "Game Over"
+												, JOptionPane.OK_CANCEL_OPTION
+												, JOptionPane.QUESTION_MESSAGE
+												, null);
+										if(option == 0){
+											view.render();
+											view.setReset(true);
+										} else {
+											System.exit(0);
+										}
+									}
 								} else {
 									closedAnimation(i, j, x, y);
-//									view.getPanelsLeftAt(x, y).setBackground(Color.BLUE);
-//									view.getLabelsLeftAt(x, y).setVisible(false);
-//									view.setPanelLeftActive(false);
 								}
 							}
 							
@@ -185,5 +208,19 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 		};
 		thread.start();
 	}
-	
+
+	public boolean isConditionWin(){
+		for(int i=0; i<view.getLabelsPanelLeft().length; i++){
+			for(int j=0; j<view.getLabelsPanelLeft()[0].length; j++){
+				if(!view.getLabelsLeftAt(i,j).isVisible()){
+					return false;
+				}
+				if(!view.getLabelsRightAt(i,j).isVisible()){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 }

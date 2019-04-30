@@ -28,11 +28,11 @@ import com.tubes.po2.src.Source;
 public class View extends JFrame{
 	
 	private int gameMode = Source.GAME_MODE2X2;
-	private JPanel panelsLeft[][];
-	private JPanel panelsRight[][];
+	private JPanel[][] panelsLeft;
+	private JPanel[][] panelsRight;
 	
-	private JLabel labelsPanelLeft[][];
-	private JLabel labelsPanelRight[][];
+	private JLabel[][] labelsPanelLeft;
+	private JLabel[][] labelsPanelRight;
 	private boolean isPanelLeftActive = false;
 	private boolean isPanelRightActive = false;
 	
@@ -435,6 +435,20 @@ public class View extends JFrame{
 	public void setReset(boolean isReset) {
 		this.isReset = isReset;
 	}
-	
-	
+
+	public JLabel[][] getLabelsPanelLeft() {
+		return labelsPanelLeft;
+	}
+
+	public void setLabelsPanelLeft(JLabel[][] labelsPanelLeft) {
+		this.labelsPanelLeft = labelsPanelLeft;
+	}
+
+	public JLabel[][] getLabelsPanelRight() {
+		return labelsPanelRight;
+	}
+
+	public void setLabelsPanelRight(JLabel[][] labelsPanelRight) {
+		this.labelsPanelRight = labelsPanelRight;
+	}
 }
