@@ -31,6 +31,8 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == view.getBtnNewGame()) {
+			view.resetScores();
+			view.setLabelScores(view.getScores());
 			view.setReset(true);
 			view.render();
 		}
@@ -86,10 +88,12 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 									view.getLabelsLeftAt(i, j).setVisible(true);
 									view.setPanelLeftActive(false);
 									view.setPanelRightActive(false);
+									view.setScores(5);
+									view.setLabelScores(view.getScores());
 									view.setReset(true);
 									if(isConditionWin()){
 										option = JOptionPane.showConfirmDialog(null
-												, "Anda menang, mau main lagi?"
+												, "Anda menang dengan score : "+view.getScores()+", mau main lagi?"
 												, "Game Over"
 												, JOptionPane.OK_CANCEL_OPTION
 												, JOptionPane.QUESTION_MESSAGE
@@ -97,12 +101,15 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 										if(option == 0){
 											view.render();
 											view.setReset(true);
+											view.resetScores();
 										} else {
 											System.exit(0);
 										}
 									}
 								} else {
 									closedAnimation(i, j, x, y);
+									view.setScores(-2);
+									view.setLabelScores(view.getScores());
 								}
 							}
 						} else {
@@ -133,10 +140,12 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 									view.getLabelsRightAt(i, j).setVisible(true);
 									view.setPanelRightActive(false);
 									view.setPanelLeftActive(false);
+									view.setScores(5);
+									view.setLabelScores(view.getScores());
 									view.setReset(true);
 									if(isConditionWin()){
 										option = JOptionPane.showConfirmDialog(null
-												, "Anda menang, mau main lagi?"
+												, "Anda menang dengan score : "+view.getScores()+", mau main lagi?"
 												, "Game Over"
 												, JOptionPane.OK_CANCEL_OPTION
 												, JOptionPane.QUESTION_MESSAGE
@@ -144,12 +153,15 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 										if(option == 0){
 											view.render();
 											view.setReset(true);
+											view.resetScores();
 										} else {
 											System.exit(0);
 										}
 									}
 								} else {
 									closedAnimation(i, j, x, y);
+									view.setScores(-2);
+									view.setLabelScores(view.getScores());
 								}
 							}
 							

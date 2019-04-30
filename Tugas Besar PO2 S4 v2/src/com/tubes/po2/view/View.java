@@ -52,7 +52,10 @@ public class View extends JFrame{
 	private int timeCount = 0;
 	private int timeLimit = 10;
 	private boolean isReset = false;
-	
+
+	private JLabel labelScores;
+	private int scores = 0;
+
 	public View() {
 		super("Game Tebak Tempel");
 		comboGameMode = new JComboBox<String>(Source.GAME_MODES);
@@ -164,7 +167,8 @@ public class View extends JFrame{
 		c.insets = new Insets(10,10,10,10);
 		timer();
 		panel.add(lTimer, c);
-		
+
+		labelScores = new JLabel("Scores : "+scores);
 		c.anchor = GridBagConstraints.NORTHEAST;
 		c.gridx = 2;
 		c.gridy = 0;
@@ -172,7 +176,7 @@ public class View extends JFrame{
 		c.weighty = 0.5;
 		c.ipadx = 105;
 		c.insets = new Insets(10,10,10,10);
-		panel.add(new JLabel("Score : "), c);
+		panel.add(labelScores, c);
 		
 		return panel;
 	}
@@ -450,5 +454,29 @@ public class View extends JFrame{
 
 	public void setLabelsPanelRight(JLabel[][] labelsPanelRight) {
 		this.labelsPanelRight = labelsPanelRight;
+	}
+
+	public int getScores() {
+		return scores;
+	}
+
+	public void resetScores() {
+		this.scores = 0;
+	}
+
+	public void setScores(int scores) {
+		if((this.scores+scores) < 0){
+			this.scores = 0;
+		} else {
+			this.scores += scores;
+		}
+	}
+
+	public JLabel getLabelScores() {
+		return labelScores;
+	}
+
+	public void setLabelScores(int scores) {
+		this.labelScores.setText("Scores : "+scores);
 	}
 }
