@@ -17,7 +17,7 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 
 	private View view;
 	private String panelPosition;
-	private int option;
+	private static int gameMode;
 
 	public Controller(View view) {
 		this.view = view;
@@ -32,8 +32,8 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == view.getBtnNewGame()) {
 			view.resetScores();
-			view.setLabelScores(view.getScores());
-			view.setReset(true);
+			view.resetTimer();
+			view.setGameMode(gameMode);
 			view.render();
 		}
 	}
@@ -42,16 +42,13 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 	public void itemStateChanged(ItemEvent e) {
 		switch(view.getComboGameMode().getSelectedIndex()) {
 		case 0:
-			view.setGameMode(Source.GAME_MODE2X2);
+			gameMode = Source.GAME_MODE2X2;
 			break;
 		case 1:
-			view.setGameMode(Source.GAME_MODE3X3);
+			gameMode = Source.GAME_MODE3X3;
 			break;
 		case 2:
-			view.setGameMode(Source.GAME_MODE4X4);
-			break;
-		default:
-			view.setGameMode(Source.GAME_MODE2X2);
+			gameMode = Source.GAME_MODE4X4;
 			break;
 		}
 	}
@@ -73,6 +70,7 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		int option;
 		if(panelPosition.equals(Source.PANEL_LEFT)) {  
 			for(int i=0; i<view.getGameMode(); i++) {
 				for(int j=0; j<view.getGameMode(); j++) {
@@ -89,9 +87,9 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 									view.setPanelLeftActive(false);
 									view.setPanelRightActive(false);
 									view.setScores(5);
-									view.setLabelScores(view.getScores());
-									view.setReset(true);
+									view.resetTimer();
 									if(isConditionWin()){
+                                        view.interruptThread();
 										option = JOptionPane.showConfirmDialog(null
 												, "Anda menang dengan score : "+view.getScores()+", mau main lagi?"
 												, "Game Over"
@@ -99,9 +97,9 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 												, JOptionPane.QUESTION_MESSAGE
 												, null);
 										if(option == 0){
-											view.render();
-											view.setReset(true);
 											view.resetScores();
+											view.resetTimer();
+											view.render();
 										} else {
 											System.exit(0);
 										}
@@ -109,7 +107,6 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 								} else {
 									closedAnimation(i, j, x, y);
 									view.setScores(-2);
-									view.setLabelScores(view.getScores());
 								}
 							}
 						} else {
@@ -141,9 +138,9 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 									view.setPanelRightActive(false);
 									view.setPanelLeftActive(false);
 									view.setScores(5);
-									view.setLabelScores(view.getScores());
-									view.setReset(true);
+									view.resetTimer();
 									if(isConditionWin()){
+                                        view.interruptThread();
 										option = JOptionPane.showConfirmDialog(null
 												, "Anda menang dengan score : "+view.getScores()+", mau main lagi?"
 												, "Game Over"
@@ -151,9 +148,9 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 												, JOptionPane.QUESTION_MESSAGE
 												, null);
 										if(option == 0){
-											view.render();
-											view.setReset(true);
 											view.resetScores();
+											view.resetTimer();
+											view.render();
 										} else {
 											System.exit(0);
 										}
@@ -161,7 +158,6 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 								} else {
 									closedAnimation(i, j, x, y);
 									view.setScores(-2);
-									view.setLabelScores(view.getScores());
 								}
 							}
 							
@@ -186,42 +182,42 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 		
 	}
 
-	public void closedAnimation(int x1, int y1, int x2, int y2) {
-		Thread thread = new Thread() {
-			public void run() {
-				if(panelPosition.equals(Source.PANEL_RIGHT)) {
-					try {
-						view.getPanelsRightAt(x1, y1).setBackground(Color.WHITE);
-						view.getLabelsRightAt(x1, y1).setVisible(true);
-						Thread.sleep(400);
-						view.getPanelsRightAt(x1, y1).setBackground(Color.BLUE);
-						view.getLabelsRightAt(x1, y1).setVisible(false);
-						view.getPanelsLeftAt(x2, y2).setBackground(Color.BLUE);
-						view.getLabelsLeftAt(x2, y2).setVisible(false);
-						view.setPanelLeftActive(false);
-					} catch(Exception e){
-						e.printStackTrace();
-					}
-				} else {
-					try {
-						view.getPanelsLeftAt(x1, y1).setBackground(Color.WHITE);
-						view.getLabelsLeftAt(x1, y1).setVisible(true);
-						Thread.sleep(400);
-						view.getPanelsLeftAt(x1, y1).setBackground(Color.BLUE);
-						view.getLabelsLeftAt(x1, y1).setVisible(false);
-						view.getPanelsRightAt(x2, y2).setBackground(Color.BLUE);
-						view.getLabelsRightAt(x2, y2).setVisible(false);
-						view.setPanelRightActive(false);
-					} catch(Exception e){
-						e.printStackTrace();
-					}
+	private void closedAnimation(int x1, int y1, int x2, int y2) {
+		Thread thread = new Thread(() -> {
+
+			if(panelPosition.equals(Source.PANEL_RIGHT)) {
+				try {
+					view.getPanelsRightAt(x1, y1).setBackground(Color.WHITE);
+					view.getLabelsRightAt(x1, y1).setVisible(true);
+					Thread.sleep(400);
+					view.getPanelsRightAt(x1, y1).setBackground(Color.BLUE);
+					view.getLabelsRightAt(x1, y1).setVisible(false);
+					view.getPanelsLeftAt(x2, y2).setBackground(Color.BLUE);
+					view.getLabelsLeftAt(x2, y2).setVisible(false);
+					view.setPanelLeftActive(false);
+				} catch(Exception e){
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					view.getPanelsLeftAt(x1, y1).setBackground(Color.WHITE);
+					view.getLabelsLeftAt(x1, y1).setVisible(true);
+					Thread.sleep(400);
+					view.getPanelsLeftAt(x1, y1).setBackground(Color.BLUE);
+					view.getLabelsLeftAt(x1, y1).setVisible(false);
+					view.getPanelsRightAt(x2, y2).setBackground(Color.BLUE);
+					view.getLabelsRightAt(x2, y2).setVisible(false);
+					view.setPanelRightActive(false);
+				} catch(Exception e){
+					e.printStackTrace();
 				}
 			}
-		};
+		});
+
 		thread.start();
 	}
 
-	public boolean isConditionWin(){
+	private boolean isConditionWin(){
 		for(int i=0; i<view.getLabelsPanelLeft().length; i++){
 			for(int j=0; j<view.getLabelsPanelLeft()[0].length; j++){
 				if(!view.getLabelsLeftAt(i,j).isVisible()){
