@@ -1,8 +1,6 @@
 package com.tubes.po2.view;
 
 import java.awt.*;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -10,25 +8,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 
 import com.tubes.po2.controller.Controller;
 import com.tubes.po2.src.Source;
 
-@SuppressWarnings("serial")
 public class View extends JFrame{
-	
+
+    private static final String GAME_NAME = "TEBAK TEMPEL";
+
 	private int gameMode = Source.GAME_MODE2X2;
 	private JPanel[][] panelsLeft;
 	private JPanel[][] panelsRight;
 	
 	private JLabel[][] labelsPanelLeft;
 	private JLabel[][] labelsPanelRight;
-	private boolean isPanelLeftActive = false;
-	private boolean isPanelRightActive = false;
 
 	private Thread thread;
 
@@ -36,15 +31,17 @@ public class View extends JFrame{
 	private int panelLeftActiveIndexY;
 	private int panelRightActiveIndexX;
 	private int panelRightActiveIndexY;
-	
+    private boolean isPanelLeftActive = false;
+    private boolean isPanelRightActive = false;
+
 	private JButton btnNewGame;
 	private JComboBox<String> comboGameMode;
-	
-	private JPanel upperPanel;
-	private JPanel mainContainerPanel;
+
+	private JPanel mainContainer2nd;
 	private JPanel gamePanel;
-	
-	private JLabel lTimer;
+    private GridBagConstraints cm;
+
+	private JLabel labelTimer;
 	private int timeCount = 0;
 	private int timeLimit = 10;
 	private boolean isReset = false;
@@ -55,46 +52,51 @@ public class View extends JFrame{
 	private String[][] gameData;
 
 	public View() {
-		super("Game Tebak Tempel");
-		comboGameMode = new JComboBox<String>(Source.GAME_MODES);
-		lTimer = new JLabel();
+		super(GAME_NAME);
+
+		getContentPane().add(mainPanel(), BorderLayout.CENTER);
 	}
 	
 	public void initView() {
-		addMainPanel();
-		
-		setResizable(true);
+		setResizable(false);
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 	
-	private void addMainPanel() {
-		upperPanel = new JPanel();
-		upperPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+	private JPanel mainPanel() {
+        JPanel mainContainer1st = new JPanel();
+		mainContainer1st.setLayout(new FlowLayout(FlowLayout.LEFT));
 		
-		mainContainerPanel = new JPanel();
-		mainContainerPanel.setLayout(new GridBagLayout());
-		GridBagConstraints cm = new GridBagConstraints();
-		
-		cm.anchor = GridBagConstraints.NORTHWEST;
-		cm.gridx = 0;
-		cm.gridy = 0;
-		cm.weightx = 0.5;
-		cm.weighty = 0.5;
-		mainContainerPanel.add(addGamePanel(), cm);
+		mainContainer2nd = new JPanel();
+		mainContainer2nd.setLayout(new GridBagLayout());
 
-		cm.gridx = 0;
-		cm.gridy = 1;
-		cm.weightx = 0.5;
-		cm.weighty = 0.5;
-		mainContainerPanel.add(addOptionPanel(), cm);
+        cm = new GridBagConstraints();
+		putOptionPanelOnMainPanel();
+		putGamePanelOnMainPanel();
 		
-		upperPanel.add(mainContainerPanel);
-		add(upperPanel, BorderLayout.CENTER);
+		mainContainer1st.add(mainContainer2nd);
+		return mainContainer1st;
 	}
-	
-	private JPanel addGamePanel() {
+
+	private void putGamePanelOnMainPanel(){
+        cm.anchor = GridBagConstraints.NORTHWEST;
+        cm.gridx = 0;
+        cm.gridy = 0;
+        cm.weightx = 0.5;
+        cm.weighty = 0.5;
+        mainContainer2nd.add(gamePanel(), cm);
+    }
+
+    private void putOptionPanelOnMainPanel(){
+        cm.gridx = 0;
+        cm.gridy = 1;
+        cm.weightx = 0.5;
+        cm.weighty = 0.5;
+        mainContainer2nd.add(optionPanel(), cm);
+    }
+
+	private JPanel gamePanel() {
 		gamePanel = new JPanel();
 		gamePanel.setLayout(new GridBagLayout());
 		gamePanel.setPreferredSize(new Dimension(720, 440));
@@ -107,26 +109,26 @@ public class View extends JFrame{
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.insets = new Insets(10,10,10,10);
-		gamePanel.add(addLeftGamePanel(), c);
+		gamePanel.add(leftGamePanel(), c);
 		
 		c.gridx = 1;
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.insets = new Insets(10,10,10,10);
-		gamePanel.add(addRightGamePanel(), c);
+		gamePanel.add(rightGamePanel(), c);
 
         timer();
 
 		return gamePanel;
 	}
 	
-	private JPanel addOptionPanel() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridBagLayout());
-		panel.setBorder(new EtchedBorder(EtchedBorder.RAISED));
+	private JPanel optionPanel() {
+		JPanel optionPanel = new JPanel();
+        optionPanel.setLayout(new GridBagLayout());
+        optionPanel.setBorder(new EtchedBorder(EtchedBorder.RAISED));
 		GridBagConstraints c = new GridBagConstraints();
-		
+
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -134,15 +136,16 @@ public class View extends JFrame{
 		c.weighty = 0.5;
 		c.ipadx = 130;
 		c.insets = new Insets(10,10,0,10);
-		panel.add(new JLabel("Pilih game mode : "), c);
-		
+        optionPanel.add(new JLabel("Pilih game mode : "), c);
+
+        comboGameMode = new JComboBox<>(Source.GAME_MODES);
 		comboGameMode.addItemListener(new Controller(this));
 		c.gridx = 0;
 		c.gridy = 1;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.insets = new Insets(0,10,10,10);
-		panel.add(comboGameMode, c);
+        optionPanel.add(comboGameMode, c);
 		
 		btnNewGame = new JButton("Mulai Game Baru");
 		btnNewGame.setPreferredSize(new Dimension(90,30));
@@ -152,15 +155,16 @@ public class View extends JFrame{
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.insets = new Insets(0,10,10,10);
-		panel.add(btnNewGame, c);
-		
+        optionPanel.add(btnNewGame, c);
+
+        labelTimer = new JLabel();
 		c.gridx = 1;
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.ipadx = 100;
 		c.insets = new Insets(10,10,10,10);
-		panel.add(lTimer, c);
+        optionPanel.add(labelTimer, c);
 
 		labelScores = new JLabel("Scores : "+scores);
 		c.anchor = GridBagConstraints.NORTHEAST;
@@ -170,43 +174,12 @@ public class View extends JFrame{
 		c.weighty = 0.5;
 		c.ipadx = 105;
 		c.insets = new Insets(10,10,10,10);
-		panel.add(labelScores, c);
+        optionPanel.add(labelScores, c);
 		
-		return panel;
+		return optionPanel;
 	}
 	
-	private void timer() {
-	    if(thread == null){
-            thread = new Thread(() -> {
-                for(int i=1; i<=timeLimit; i++) {
-                    try {
-                        if(!isReset) {
-                            timeCount = i;
-                            lTimer.setText("Timer : "+timeCount+"s           (Limit : 10s)");
-                            if(timeCount == 10) {
-                                JOptionPane.showMessageDialog(null, "Anda kalah, karena kehabisan waktu");
-                                render();
-                                i = 0;
-                            }
-                            Thread.sleep(1000);
-                        } else {
-                            i = 0;
-                            timeCount = i;
-                            isReset = false;
-                        }
-                    } catch (InterruptedException e) {
-                        timeCount = 0;
-                        lTimer.setText("Timer : "+timeCount+"s           (Limit : 10s)");
-                        return;
-                    }
-                }
-            });
-
-            thread.start();
-        }
-	}
-	
-	private JPanel addLeftGamePanel() {
+	private JPanel leftGamePanel() {
 		panelsLeft = new JPanel[gameMode][gameMode];
 		labelsPanelLeft = new JLabel[gameMode][gameMode];
 
@@ -257,7 +230,7 @@ public class View extends JFrame{
 		return panelMain;
 	}
 	
-	private JPanel addRightGamePanel() {
+	private JPanel rightGamePanel() {
 		panelsRight = new JPanel[gameMode][gameMode];
 		labelsPanelRight = new JLabel[gameMode][gameMode];
 
@@ -309,22 +282,47 @@ public class View extends JFrame{
 	}
 	
 	public void render() {
-		mainContainerPanel.remove(gamePanel);
-		GridBagConstraints cm = new GridBagConstraints();
+		mainContainer2nd.remove(gamePanel);
 		
-		cm.anchor = GridBagConstraints.NORTHWEST;
-		cm.gridx = 0;
-		cm.gridy = 0;
-		cm.weightx = 0.5;
-		cm.weighty = 0.5;
-		mainContainerPanel.add(addGamePanel(), cm);
+		putGamePanelOnMainPanel();
 
 		isPanelLeftActive = false;
 		isPanelRightActive = false;
 
-		mainContainerPanel.validate();
+		mainContainer2nd.validate();
 	}
-	
+
+    private void timer() {
+        if(thread == null){
+            thread = new Thread(() -> {
+                for(int i=1; i<=timeLimit; i++) {
+                    try {
+                        if(!isReset) {
+                            timeCount = i;
+                            labelTimer.setText("Timer : "+timeCount+"s           (Limit : 10s)");
+                            if(timeCount == 10) {
+                                JOptionPane.showMessageDialog(null, "Anda kalah, karena kehabisan waktu");
+                                render();
+                                i = 0;
+                            }
+                            Thread.sleep(1000);
+                        } else {
+                            i = 0;
+                            timeCount = i;
+                            isReset = false;
+                        }
+                    } catch (InterruptedException e) {
+                        timeCount = 0;
+                        labelTimer.setText("Timer : "+timeCount+"s           (Limit : 10s)");
+                        return;
+                    }
+                }
+            });
+
+            thread.start();
+        }
+    }
+
 	public int getGameMode() {
 		return gameMode;
 	}
@@ -361,7 +359,7 @@ public class View extends JFrame{
 		this.isPanelRightActive = isPanelRightActive;
 	}
 
-	public void setPanelsLeftAt(JPanel panelTop, int x, int y) {
+	private void setPanelsLeftAt(JPanel panelTop, int x, int y) {
 		this.panelsLeft[x][y] = panelTop;
 	}
 	
@@ -369,7 +367,7 @@ public class View extends JFrame{
 		return panelsRight[x][y];
 	}
 	
-	public void setPanelsRightAt(JPanel panelBot, int x, int y) {
+	private void setPanelsRightAt(JPanel panelBot, int x, int y) {
 		this.panelsRight[x][y] = panelBot;
 	}
 
