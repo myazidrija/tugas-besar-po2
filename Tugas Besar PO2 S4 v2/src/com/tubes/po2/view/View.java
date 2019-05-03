@@ -41,12 +41,13 @@ public class View extends JFrame{
 	private JPanel gamePanel;
     private GridBagConstraints cm;
 
-	private JLabel labelTimer;
+	private JLabel labelTimerCount;
 	private int timeCount = 0;
 	private int timeLimit = 10;
 	private boolean isReset = false;
 
 	private JLabel labelScores;
+	private JLabel labelScoresCount;
 	private int scores = 0;
 
 	private String[][] gameData;
@@ -129,14 +130,19 @@ public class View extends JFrame{
         optionPanel.setBorder(new EtchedBorder(EtchedBorder.RAISED));
 		GridBagConstraints c = new GridBagConstraints();
 
+        JLabel labelGameMode = new JLabel("Pilih game mode : ");
+        labelGameMode.setPreferredSize(new Dimension(80, 16));
+        labelGameMode.setFont(new Font("Aquatico", Font.PLAIN, 12));
+//        labelGameMode.setOpaque(true);
+//        labelGameMode.setBackground(Color.YELLOW);
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.ipadx = 130;
-		c.insets = new Insets(10,10,0,10);
-        optionPanel.add(new JLabel("Pilih game mode : "), c);
+		c.insets = new Insets(10,10,10,10);
+        optionPanel.add(labelGameMode, c);
 
         comboGameMode = new JComboBox<>(Source.GAME_MODES);
 		comboGameMode.addItemListener(new Controller(this));
@@ -157,25 +163,62 @@ public class View extends JFrame{
 		c.insets = new Insets(0,10,10,10);
         optionPanel.add(btnNewGame, c);
 
-        labelTimer = new JLabel();
+        JLabel labelTimer = new JLabel("Timer : Limit 10 seconds");
+        labelTimer.setFont(new Font("Aquatico", Font.PLAIN, 12));
+//        labelTimer.setOpaque(true);
+//        labelTimer.setBackground(Color.YELLOW);
+        labelTimer.setHorizontalAlignment(JLabel.CENTER);
 		c.gridx = 1;
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
-		c.ipadx = 100;
-		c.insets = new Insets(10,10,10,10);
+		c.ipadx = 80;
+		c.insets = new Insets(10,10,0,10);
         optionPanel.add(labelTimer, c);
 
-		labelScores = new JLabel("Scores : "+scores);
-		c.anchor = GridBagConstraints.NORTHEAST;
+        labelTimerCount = new JLabel(String.valueOf(timeCount));
+        labelTimerCount.setHorizontalAlignment(JLabel.CENTER);
+        labelTimerCount.setFont(new Font("Apex Mk3 ExtraLight", Font.BOLD, 50));
+        c.gridx = 1;
+        c.gridy = 1;
+        c.gridheight = 2;
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.ipadx = 80;
+        c.insets = new Insets(0,10,10,10);
+        c.fill = GridBagConstraints.BOTH;
+        optionPanel.add(labelTimerCount, c);
+
+		labelScores = new JLabel("Scores : ");
+//		labelScores.setOpaque(true);
+//        labelScores.setBackground(Color.YELLOW);
+        labelScores.setFont(new Font("Aquatico", Font.PLAIN, 12));
+        //labelScores.setPreferredSize(new Dimension(30,12));
+        labelScores.setHorizontalAlignment(JLabel.CENTER);
 		c.gridx = 2;
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
-		c.ipadx = 105;
-		c.insets = new Insets(10,10,10,10);
+		//c.ipadx = 100;
+		c.insets = new Insets(10,10,0,10);
+        c.fill = GridBagConstraints.HORIZONTAL;
         optionPanel.add(labelScores, c);
-		
+
+        labelScoresCount = new JLabel("00");
+//        labelScoresCount.setOpaque(true);
+//        labelScoresCount.setBackground(Color.YELLOW);
+        labelScoresCount.setFont(new Font("Apex Mk3 ExtraLight", Font.BOLD, 50));
+        labelScoresCount.setHorizontalAlignment(JLabel.CENTER);
+        labelScoresCount.setPreferredSize(new Dimension(90,60));
+        c.gridx = 2;
+        c.gridy = 1;
+        c.gridheight = 2;
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.insets = new Insets(0,10,10,10);
+        c.fill = GridBagConstraints.NONE;
+        optionPanel.add(labelScoresCount, c);
+
 		return optionPanel;
 	}
 	
@@ -299,8 +342,11 @@ public class View extends JFrame{
                     try {
                         if(!isReset) {
                             timeCount = i;
-                            labelTimer.setText("Timer : "+timeCount+"s           (Limit : 10s)");
+                            if(timeCount < 10){
+                                labelTimerCount.setText("0"+timeCount);
+                            }
                             if(timeCount == 10) {
+                                labelTimerCount.setText(""+timeCount);
                                 JOptionPane.showMessageDialog(null, "Anda kalah, karena kehabisan waktu");
                                 render();
                                 i = 0;
@@ -313,7 +359,7 @@ public class View extends JFrame{
                         }
                     } catch (InterruptedException e) {
                         timeCount = 0;
-                        labelTimer.setText("Timer : "+timeCount+"s           (Limit : 10s)");
+                        labelTimerCount.setText("0"+timeCount);
                         return;
                     }
                 }
@@ -418,8 +464,8 @@ public class View extends JFrame{
 	}
 
 	public void resetScores() {
-		this.scores = 0;
-		this.labelScores.setText("Scores : "+scores);
+		scores = 0;
+        labelScoresCount.setText("0"+scores);
 	}
 
 	public void setScores(int newScores) {
@@ -428,7 +474,11 @@ public class View extends JFrame{
 		} else {
 			scores += newScores;
 		}
-		labelScores.setText("Scores : " + scores);
+		if(scores < 10){
+            labelScoresCount.setText("0"+scores);
+        } else {
+            labelScoresCount.setText(""+scores);
+        }
 	}
 
     public void interruptThread(){
