@@ -130,8 +130,8 @@ public class View extends JFrame{
 		GridBagConstraints c = new GridBagConstraints();
 
         JLabel labelGameMode = new JLabel("Pilih game mode : ");
-        labelGameMode.setPreferredSize(new Dimension(80, 16));
-        labelGameMode.setFont(new Font("Aquatico", Font.PLAIN, 12));
+        labelGameMode.setPreferredSize(new Dimension(105, 20));
+        labelGameMode.setFont(new Font("Lora", Font.BOLD, 16));
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -142,6 +142,8 @@ public class View extends JFrame{
         optionPanel.add(labelGameMode, c);
 
         comboGameMode = new JComboBox<>(Source.GAME_MODES);
+        comboGameMode.setBackground(Color.WHITE);
+        comboGameMode.setFont(new Font("Lora", Font.BOLD, 13));
 		comboGameMode.addItemListener(new Controller(this));
 		c.gridx = 0;
 		c.gridy = 1;
@@ -150,7 +152,8 @@ public class View extends JFrame{
 		c.insets = new Insets(0,10,10,10);
         optionPanel.add(comboGameMode, c);
 		
-		btnNewGame = new JButton("Start New Game");
+		btnNewGame = new JButton("START NEW GAME");
+		btnNewGame.setFont(new Font("Lora", Font.BOLD, 14));
 		btnNewGame.setPreferredSize(new Dimension(90,30));
 		btnNewGame.addActionListener(new Controller(this));
 		c.gridx = 0;
@@ -160,8 +163,9 @@ public class View extends JFrame{
 		c.insets = new Insets(0,10,10,10);
         optionPanel.add(btnNewGame, c);
 
-        JLabel labelTimer = new JLabel("Timer : Limit 10 seconds");
-        labelTimer.setFont(new Font("Aquatico", Font.PLAIN, 12));
+        JLabel labelTimer = new JLabel("Timer : Limit "+timeLimit+" seconds");
+        labelTimer.setPreferredSize(new Dimension(160, 20));
+        labelTimer.setFont(new Font("Lora", Font.BOLD, 16));
         labelTimer.setHorizontalAlignment(JLabel.CENTER);
 		c.gridx = 1;
 		c.gridy = 0;
@@ -174,6 +178,9 @@ public class View extends JFrame{
         labelTimerCount = new JLabel(String.valueOf(timeCount));
         labelTimerCount.setHorizontalAlignment(JLabel.CENTER);
         labelTimerCount.setFont(new Font("Apex Mk3 ExtraLight", Font.BOLD, 50));
+        labelTimerCount.setOpaque(true);
+        labelTimerCount.setBackground(Color.WHITE);
+        labelTimerCount.setBorder(new LineBorder(Color.BLACK, 3));
         c.gridx = 1;
         c.gridy = 1;
         c.gridheight = 2;
@@ -185,7 +192,8 @@ public class View extends JFrame{
         optionPanel.add(labelTimerCount, c);
 
         JLabel labelScores = new JLabel("Scores : ");
-        labelScores.setFont(new Font("Aquatico", Font.PLAIN, 12));
+        labelScores.setPreferredSize(new Dimension(100, 20));
+        labelScores.setFont(new Font("Lora", Font.BOLD, 16));
         labelScores.setHorizontalAlignment(JLabel.CENTER);
 		c.gridx = 2;
 		c.gridy = 0;
@@ -196,16 +204,18 @@ public class View extends JFrame{
         optionPanel.add(labelScores, c);
 
         labelScoresCount = new JLabel("00");
-        labelScoresCount.setFont(new Font("Apex Mk3 ExtraLight", Font.BOLD, 50));
         labelScoresCount.setHorizontalAlignment(JLabel.CENTER);
-        labelScoresCount.setPreferredSize(new Dimension(90,60));
+        labelScoresCount.setFont(new Font("Apex Mk3 ExtraLight", Font.BOLD, 50));
+        labelScoresCount.setOpaque(true);
+        labelScoresCount.setBackground(Color.WHITE);
+        labelScoresCount.setBorder(new LineBorder(Color.BLACK, 3));
         c.gridx = 2;
         c.gridy = 1;
         c.gridheight = 2;
         c.weightx = 0.5;
         c.weighty = 0.5;
         c.insets = new Insets(0,10,10,10);
-        c.fill = GridBagConstraints.NONE;
+        c.fill = GridBagConstraints.BOTH;
         optionPanel.add(labelScoresCount, c);
 
 		return optionPanel;
@@ -329,19 +339,18 @@ public class View extends JFrame{
             thread = new Thread(() -> {
                 for(indexTimer = 1; indexTimer<=timeLimit; indexTimer++) {
                     try {
-
-                            timeCount = indexTimer;
-                            if(timeCount < 10){
-                                labelTimerCount.setText("0"+timeCount);
-                            }
-                            if(timeCount == 10) {
-                                labelTimerCount.setText(""+timeCount);
-                                JOptionPane.showMessageDialog(null, "Anda kalah, karena kehabisan waktu");
-                                render();
-                                indexTimer = 0;
-                            }
-                            Thread.sleep(1000);
-
+                        timeCount = indexTimer;
+                        if(timeCount < 10){
+                            labelTimerCount.setText("0"+timeCount);
+                        }
+                        if(timeCount == 10) {
+                            labelTimerCount.setText(""+timeCount);
+                            JOptionPane.showMessageDialog(null, "Anda kalah, karena kehabisan waktu");
+                            render();
+                            resetScores();
+                            indexTimer = 0;
+                        }
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         timeCount = 0;
                         labelTimerCount.setText("0"+timeCount);
@@ -436,7 +445,7 @@ public class View extends JFrame{
 		this.panelRightActiveIndexY = y;
 	}
 
-	public void resetTimer() {
+    public void resetTimer() {
 		timer();
 	}
 

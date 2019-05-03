@@ -91,16 +91,47 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 									view.interruptTimerThread();
 									view.resetTimer();
 									if(isConditionWin()){
-                                        view.interruptTimerThread();
-										option = JOptionPane.showConfirmDialog(null
-												, "Anda menang dengan score : "+view.getScores()+", mau main lagi?"
-												, "Game Over"
-												, JOptionPane.OK_CANCEL_OPTION
-												, JOptionPane.QUESTION_MESSAGE
-												, null);
+										view.interruptTimerThread();
+										switch (view.getGameMode()){
+											case Source.GAME_MODE2X2:
+												option = JOptionPane.showConfirmDialog(null
+														, "Anda menang dengan score : "+view.getScores()+"" +
+																", \nLanjut ke mode selanjutnya?"
+														, "You win!!"
+														, JOptionPane.OK_CANCEL_OPTION
+														, JOptionPane.QUESTION_MESSAGE
+														, null);
+												view.setGameMode(Source.GAME_MODE3X3);
+												view.getComboGameMode().setSelectedIndex(Source.GAME_MODE3X3-2);
+												break;
+											case Source.GAME_MODE3X3:
+												option = JOptionPane.showConfirmDialog(null
+														, "Anda menang dengan score : "+view.getScores()+"" +
+																", \nLanjut ke mode selanjutnya?"
+														, "You win!!"
+														, JOptionPane.OK_CANCEL_OPTION
+														, JOptionPane.QUESTION_MESSAGE
+														, null);
+												view.setGameMode(Source.GAME_MODE4X4);
+												view.getComboGameMode().setSelectedIndex(Source.GAME_MODE4X4-2);
+												break;
+											case Source.GAME_MODE4X4:
+												option = JOptionPane.showConfirmDialog(null
+														, "Anda menang dengan score : "+view.getScores()+"" +
+																", \nAnda telah menyelesaikan permainan, mau bermain lagi?"
+														, "You win!!"
+														, JOptionPane.OK_CANCEL_OPTION
+														, JOptionPane.QUESTION_MESSAGE
+														, null);
+												view.setGameMode(Source.GAME_MODE2X2);
+												view.getComboGameMode().setSelectedIndex(Source.GAME_MODE2X2-2);
+												break;
+											default:
+												option = 1;
+										}
 										if(option == 0){
-											view.resetScores();
 											view.resetTimer();
+
 											view.render();
 										} else {
 											System.exit(0);
@@ -143,15 +174,45 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 									view.interruptTimerThread();
 									view.resetTimer();
 									if(isConditionWin()){
-                                        view.interruptTimerThread();
-										option = JOptionPane.showConfirmDialog(null
-												, "Anda menang dengan score : "+view.getScores()+", mau main lagi?"
-												, "Game Over"
-												, JOptionPane.OK_CANCEL_OPTION
-												, JOptionPane.QUESTION_MESSAGE
-												, null);
+										view.interruptTimerThread();
+										switch (view.getGameMode()){
+											case Source.GAME_MODE2X2:
+												option = JOptionPane.showConfirmDialog(null
+														, "Anda menang dengan score : "+view.getScores()+"" +
+																", \nLanjut ke mode selanjutnya?"
+														, "You win!!"
+														, JOptionPane.OK_CANCEL_OPTION
+														, JOptionPane.QUESTION_MESSAGE
+														, null);
+												view.setGameMode(Source.GAME_MODE3X3);
+												view.getComboGameMode().setSelectedIndex(Source.GAME_MODE3X3-2);
+												break;
+											case Source.GAME_MODE3X3:
+												option = JOptionPane.showConfirmDialog(null
+														, "Anda menang dengan score : "+view.getScores()+"" +
+																", \nLanjut ke mode selanjutnya?"
+														, "You win!!"
+														, JOptionPane.OK_CANCEL_OPTION
+														, JOptionPane.QUESTION_MESSAGE
+														, null);
+												view.setGameMode(Source.GAME_MODE4X4);
+												view.getComboGameMode().setSelectedIndex(Source.GAME_MODE4X4-2);
+												break;
+											case Source.GAME_MODE4X4:
+												option = JOptionPane.showConfirmDialog(null
+														, "Anda menang dengan score : "+view.getScores()+"" +
+																", \nAnda telah menyelesaikan permainan, mau bermain lagi?"
+														, "You win!!"
+														, JOptionPane.OK_CANCEL_OPTION
+														, JOptionPane.QUESTION_MESSAGE
+														, null);
+												view.setGameMode(Source.GAME_MODE2X2);
+												view.getComboGameMode().setSelectedIndex(Source.GAME_MODE2X2-2);
+												break;
+											default:
+												option = 1;
+										}
 										if(option == 0){
-											view.resetScores();
 											view.resetTimer();
 											view.render();
 										} else {
@@ -192,7 +253,7 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 				try {
 					view.getPanelsRightAt(x1, y1).setBackground(Color.WHITE);
 					view.getLabelsRightAt(x1, y1).setVisible(true);
-					Thread.sleep(400);
+					Thread.sleep(200);
 					view.getPanelsRightAt(x1, y1).setBackground(Color.BLUE);
 					view.getLabelsRightAt(x1, y1).setVisible(false);
 					view.getPanelsLeftAt(x2, y2).setBackground(Color.BLUE);
