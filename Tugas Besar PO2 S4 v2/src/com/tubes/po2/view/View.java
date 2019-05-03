@@ -44,9 +44,8 @@ public class View extends JFrame{
 	private JLabel labelTimerCount;
 	private int timeCount = 0;
 	private int timeLimit = 10;
-	private boolean isReset = false;
+	private int indexTimer = 0;
 
-	private JLabel labelScores;
 	private JLabel labelScoresCount;
 	private int scores = 0;
 
@@ -133,8 +132,6 @@ public class View extends JFrame{
         JLabel labelGameMode = new JLabel("Pilih game mode : ");
         labelGameMode.setPreferredSize(new Dimension(80, 16));
         labelGameMode.setFont(new Font("Aquatico", Font.PLAIN, 12));
-//        labelGameMode.setOpaque(true);
-//        labelGameMode.setBackground(Color.YELLOW);
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -153,7 +150,7 @@ public class View extends JFrame{
 		c.insets = new Insets(0,10,10,10);
         optionPanel.add(comboGameMode, c);
 		
-		btnNewGame = new JButton("Mulai Game Baru");
+		btnNewGame = new JButton("Start New Game");
 		btnNewGame.setPreferredSize(new Dimension(90,30));
 		btnNewGame.addActionListener(new Controller(this));
 		c.gridx = 0;
@@ -165,8 +162,6 @@ public class View extends JFrame{
 
         JLabel labelTimer = new JLabel("Timer : Limit 10 seconds");
         labelTimer.setFont(new Font("Aquatico", Font.PLAIN, 12));
-//        labelTimer.setOpaque(true);
-//        labelTimer.setBackground(Color.YELLOW);
         labelTimer.setHorizontalAlignment(JLabel.CENTER);
 		c.gridx = 1;
 		c.gridy = 0;
@@ -189,24 +184,18 @@ public class View extends JFrame{
         c.fill = GridBagConstraints.BOTH;
         optionPanel.add(labelTimerCount, c);
 
-		labelScores = new JLabel("Scores : ");
-//		labelScores.setOpaque(true);
-//        labelScores.setBackground(Color.YELLOW);
+        JLabel labelScores = new JLabel("Scores : ");
         labelScores.setFont(new Font("Aquatico", Font.PLAIN, 12));
-        //labelScores.setPreferredSize(new Dimension(30,12));
         labelScores.setHorizontalAlignment(JLabel.CENTER);
 		c.gridx = 2;
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
-		//c.ipadx = 100;
 		c.insets = new Insets(10,10,0,10);
         c.fill = GridBagConstraints.HORIZONTAL;
         optionPanel.add(labelScores, c);
 
         labelScoresCount = new JLabel("00");
-//        labelScoresCount.setOpaque(true);
-//        labelScoresCount.setBackground(Color.YELLOW);
         labelScoresCount.setFont(new Font("Apex Mk3 ExtraLight", Font.BOLD, 50));
         labelScoresCount.setHorizontalAlignment(JLabel.CENTER);
         labelScoresCount.setPreferredSize(new Dimension(90,60));
@@ -338,10 +327,10 @@ public class View extends JFrame{
     private void timer() {
         if(thread == null){
             thread = new Thread(() -> {
-                for(int i=1; i<=timeLimit; i++) {
+                for(indexTimer = 1; indexTimer<=timeLimit; indexTimer++) {
                     try {
-                        if(!isReset) {
-                            timeCount = i;
+
+                            timeCount = indexTimer;
                             if(timeCount < 10){
                                 labelTimerCount.setText("0"+timeCount);
                             }
@@ -349,14 +338,10 @@ public class View extends JFrame{
                                 labelTimerCount.setText(""+timeCount);
                                 JOptionPane.showMessageDialog(null, "Anda kalah, karena kehabisan waktu");
                                 render();
-                                i = 0;
+                                indexTimer = 0;
                             }
                             Thread.sleep(1000);
-                        } else {
-                            i = 0;
-                            timeCount = i;
-                            isReset = false;
-                        }
+
                     } catch (InterruptedException e) {
                         timeCount = 0;
                         labelTimerCount.setText("0"+timeCount);
@@ -452,7 +437,7 @@ public class View extends JFrame{
 	}
 
 	public void resetTimer() {
-		isReset = true;
+		timer();
 	}
 
 	public JLabel[][] getLabelsPanelLeft() {
@@ -481,7 +466,7 @@ public class View extends JFrame{
         }
 	}
 
-    public void interruptThread(){
+    public void interruptTimerThread(){
 	    if(thread != null){
 	        thread.interrupt();
 	        thread = null;

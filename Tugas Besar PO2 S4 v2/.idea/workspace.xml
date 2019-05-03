@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98e0c98a-7f5c-4e85-a0e5-ec0893342c87" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/com/tubes/po2/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/tubes/po2/controller/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/tubes/po2/view/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/tubes/po2/view/View.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
@@ -26,27 +27,27 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/view/View.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="207" column="43" lean-forward="true" selection-start-line="207" selection-start-column="43" selection-end-line="208" selection-end-column="55" />
+            <state relative-caret-position="288">
+              <caret line="479" column="36" selection-start-line="479" selection-start-column="16" selection-end-line="479" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#9655#9656#0" expanded="true" />
                 <element signature="e#9694#9695#0" expanded="true" />
-                <element signature="e#10611#10612#0" expanded="true" />
-                <element signature="e#10632#10633#0" expanded="true" />
+                <element signature="e#12463#12464#0" expanded="true" />
+                <element signature="e#12477#12478#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="88" column="44" lean-forward="true" selection-start-line="88" selection-start-column="44" selection-end-line="88" selection-end-column="44" />
+            <state relative-caret-position="203">
+              <caret line="34" column="37" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -64,8 +65,8 @@
       <list>
         <option value="$PROJECT_DIR$/src/com/tubes/po2/main/MainGUI.java" />
         <option value="$PROJECT_DIR$/src/com/tubes/po2/src/Source.java" />
-        <option value="$PROJECT_DIR$/src/com/tubes/po2/controller/Controller.java" />
         <option value="$PROJECT_DIR$/src/com/tubes/po2/view/View.java" />
+        <option value="$PROJECT_DIR$/src/com/tubes/po2/controller/Controller.java" />
       </list>
     </option>
   </component>
@@ -254,26 +255,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/controller/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="88" column="44" lean-forward="true" selection-start-line="88" selection-start-column="44" selection-end-line="88" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/view/View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="207" column="43" lean-forward="true" selection-start-line="207" selection-start-column="43" selection-end-line="208" selection-end-column="55" />
+        <state relative-caret-position="288">
+          <caret line="479" column="36" selection-start-line="479" selection-start-column="16" selection-end-line="479" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#9655#9656#0" expanded="true" />
             <element signature="e#9694#9695#0" expanded="true" />
-            <element signature="e#10611#10612#0" expanded="true" />
-            <element signature="e#10632#10633#0" expanded="true" />
+            <element signature="e#12463#12464#0" expanded="true" />
+            <element signature="e#12477#12478#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/controller/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="34" column="37" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

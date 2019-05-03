@@ -32,6 +32,7 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == view.getBtnNewGame()) {
 			view.resetScores();
+			view.interruptTimerThread();
 			view.resetTimer();
 			view.setGameMode(gameMode);
 			view.render();
@@ -87,9 +88,10 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 									view.setPanelLeftActive(false);
 									view.setPanelRightActive(false);
 									view.setScores(5);
+									view.interruptTimerThread();
 									view.resetTimer();
 									if(isConditionWin()){
-                                        view.interruptThread();
+                                        view.interruptTimerThread();
 										option = JOptionPane.showConfirmDialog(null
 												, "Anda menang dengan score : "+view.getScores()+", mau main lagi?"
 												, "Game Over"
@@ -138,9 +140,10 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 									view.setPanelRightActive(false);
 									view.setPanelLeftActive(false);
 									view.setScores(5);
+									view.interruptTimerThread();
 									view.resetTimer();
 									if(isConditionWin()){
-                                        view.interruptThread();
+                                        view.interruptTimerThread();
 										option = JOptionPane.showConfirmDialog(null
 												, "Anda menang dengan score : "+view.getScores()+", mau main lagi?"
 												, "Game Over"
