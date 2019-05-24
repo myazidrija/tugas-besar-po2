@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98e0c98a-7f5c-4e85-a0e5-ec0893342c87" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/tubes/po2/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/tubes/po2/controller/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/tubes/po2/view/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/tubes/po2/view/View.java" afterDir="false" />
     </list>
@@ -21,24 +22,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/main/MainGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+            <state relative-caret-position="85">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/view/View.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="417" column="40" lean-forward="true" selection-start-line="417" selection-start-column="40" selection-end-line="417" selection-end-column="40" />
+            <state relative-caret-position="5405">
+              <caret line="333" lean-forward="true" selection-start-line="333" selection-end-line="333" />
               <folding>
-                <element signature="e#10869#10870#0" expanded="true" />
-                <element signature="e#10895#10896#0" expanded="true" />
-                <element signature="e#9655#9656#0" expanded="true" />
-                <element signature="e#9694#9695#0" expanded="true" />
-                <element signature="e#12463#12464#0" expanded="true" />
-                <element signature="e#12477#12478#0" expanded="true" />
+                <element signature="e#10943#10944#0" expanded="true" />
+                <element signature="e#10973#10974#0" expanded="true" />
+                <element signature="e#13257#13258#0" expanded="true" />
+                <element signature="e#13284#13285#0" expanded="true" />
+                <element signature="e#13336#13337#0" expanded="true" />
+                <element signature="e#13370#13371#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -47,17 +48,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/src/Source.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+            <state relative-caret-position="136">
+              <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="101">
-              <caret line="98" column="97" selection-start-line="98" selection-start-column="97" selection-end-line="98" selection-end-column="97" />
+            <state relative-caret-position="323">
+              <caret line="33" column="37" lean-forward="true" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -81,10 +82,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="8" />
-    <option name="y" value="31" />
-    <option name="width" value="1346" />
-    <option name="height" value="728" />
+    <option name="x" value="274" />
+    <option name="y" value="105" />
+    <option name="width" value="839" />
+    <option name="height" value="672" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -92,6 +93,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -143,7 +145,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -203,9 +204,9 @@
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="Designer" order="1" />
       <window_info id="UI Designer" order="2" />
-      <window_info id="Learn" order="3" weight="0.32980332" />
-      <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="5" weight="0.25037822" />
+      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.28214827" />
+      <window_info id="Learn" order="4" weight="0.32980332" />
+      <window_info id="Structure" order="5" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30107528" />
@@ -253,39 +254,39 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/main/MainGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/src/Source.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/view/View.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="417" column="40" lean-forward="true" selection-start-line="417" selection-start-column="40" selection-end-line="417" selection-end-column="40" />
-          <folding>
-            <element signature="e#10869#10870#0" expanded="true" />
-            <element signature="e#10895#10896#0" expanded="true" />
-            <element signature="e#9655#9656#0" expanded="true" />
-            <element signature="e#9694#9695#0" expanded="true" />
-            <element signature="e#12463#12464#0" expanded="true" />
-            <element signature="e#12477#12478#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="136">
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/controller/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="98" column="97" selection-start-line="98" selection-start-column="97" selection-end-line="98" selection-end-column="97" />
+        <state relative-caret-position="323">
+          <caret line="33" column="37" lean-forward="true" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tubes/po2/view/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5405">
+          <caret line="333" lean-forward="true" selection-start-line="333" selection-end-line="333" />
+          <folding>
+            <element signature="e#10943#10944#0" expanded="true" />
+            <element signature="e#10973#10974#0" expanded="true" />
+            <element signature="e#13257#13258#0" expanded="true" />
+            <element signature="e#13284#13285#0" expanded="true" />
+            <element signature="e#13336#13337#0" expanded="true" />
+            <element signature="e#13370#13371#0" expanded="true" />
           </folding>
         </state>
       </provider>

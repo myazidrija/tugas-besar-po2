@@ -17,7 +17,7 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 
 	private View view;
 	private String panelPosition;
-	private static int gameMode;
+	private static int gameMode = 2;
 
 	public Controller(View view) {
 		this.view = view;
@@ -31,11 +31,16 @@ public class Controller implements ActionListener, ItemListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == view.getBtnNewGame()) {
-			view.resetScores();
-			view.interruptTimerThread();
-			view.resetTimer();
-			view.setGameMode(gameMode);
-			view.render();
+			if(view.isGameStarted()){
+				view.setGameStarted(true);
+				view.timer();
+			} else {
+				view.resetScores();
+				view.interruptTimerThread();
+				view.resetTimer();
+				view.setGameMode(gameMode);
+				view.render();
+			}
 		}
 	}
 

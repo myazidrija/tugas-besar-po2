@@ -51,13 +51,16 @@ public class View extends JFrame{
 
 	private String[][] gameData;
 
+	private boolean isGameStarted = false;
+
 	public View() {
 		super(GAME_NAME);
 
-		getContentPane().add(mainPanel(), BorderLayout.CENTER);
 	}
 	
 	public void initView() {
+        getContentPane().add(mainPanel(), BorderLayout.CENTER);
+
 		setResizable(false);
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,8 +120,6 @@ public class View extends JFrame{
 		c.weighty = 0.5;
 		c.insets = new Insets(10,10,10,10);
 		gamePanel.add(rightGamePanel(), c);
-
-        timer();
 
 		return gamePanel;
 	}
@@ -334,7 +335,7 @@ public class View extends JFrame{
 		mainContainer2nd.validate();
 	}
 
-    private void timer() {
+    public void timer() {
         if(thread == null){
             thread = new Thread(() -> {
                 for(indexTimer = 1; indexTimer<=timeLimit; indexTimer++) {
@@ -481,4 +482,12 @@ public class View extends JFrame{
 	        thread = null;
         }
     }
+
+	public boolean isGameStarted() {
+		return isGameStarted;
+	}
+
+	public void setGameStarted(boolean gameStarted) {
+		isGameStarted = gameStarted;
+	}
 }
